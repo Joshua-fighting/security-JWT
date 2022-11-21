@@ -1,0 +1,43 @@
+server:
+  port: 8201
+
+soe:
+  jwt:
+    enabled: true
+    secret: smart-oral-evaluation
+    expiration: 3600000
+    header: token
+    userParamName: username
+    pwdParamName: password
+    useDefaultController: true
+    corsAllowedOrigins:
+
+    corsAllowedMethods:
+      - GET
+      - POST
+    devOpeningURI:  #指做了JWT授权的用户可以访问的路径，不管在数据库权限表中它有没有权限
+
+    permitAllURI:       #不需要JWT授权就可以访问的接口路径
+      #- /login       # 登录路径
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  datasource:
+    url: jdbc:mysql://localhost:3306/devicedbtest?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: shaoyu12
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+logging:
+  level:
+    root: info
+    com.zimug.dongbb.server.jwt: debug
+  pattern:
+    console: '%red(%d{yyyy-MM-dd HH:mm:ss}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger{10}) - %cyan(%msg%n)'
+    file: '%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger : %msg%n'
+
+file:
+  local:
+    enabled: true
+    upload-path: D:/data/   # 本地存储根路径
