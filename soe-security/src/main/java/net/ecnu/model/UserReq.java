@@ -11,8 +11,6 @@ public class UserReq {
 
     /**
      * 手机号(不能为空)
-     * TODO 可以自定义手机号注解
-     * TODO json返回数据格式
      */
     @NotBlank(message = "手机号不能为空")
     @Pattern(regexp = SOEConst.PHONE_PATTERN)

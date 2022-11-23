@@ -1,5 +1,6 @@
 package net.ecnu.controller;
 
+import net.ecnu.constant.SOEConst;
 import net.ecnu.enums.BizCodeEnum;
 import net.ecnu.exception.BizException;
 import net.ecnu.model.JwtProperties;
@@ -60,7 +61,7 @@ public class JwtAuthController {
     }
 
     /**
-     * 用户注册接口
+     * 用户注册接口,无需返回token，只有登录成功、token刷新时才返回token给前端
      */
     @PostMapping(JWTConstants.REGISTER)
     public JsonData register(@RequestBody @Validated UserReq userReq){
@@ -68,6 +69,12 @@ public class JwtAuthController {
         if(Objects.isNull(userReq)||StringUtils.isBlank(userReq.getPhone())||
             StringUtils.isBlank(userReq.getPwd())){
             return JsonData.buildCodeAndMsg(BizCodeEnum.PARAM_IS_EMPTY.getCode(),BizCodeEnum.PARAM_IS_EMPTY.getMessage());
+        }
+        /**
+         * 手机号校验，判断是否符合手机号的格式
+         */
+        if(!userReq.getPhone().matches(SOEConst.PHONE_PATTERN)){
+            return JsonData.buildCodeAndMsg(BizCodeEnum.USER_MOBILE_FORMAT_ERROR.getCode(),BizCodeEnum.USER_MOBILE_FORMAT_ERROR.getMessage());
         }
         return jwtAuthService.register(userReq);
     }

@@ -85,7 +85,7 @@ public class JwtAuthService {
             String accountNo = "user_" + IDUtil.getSnowflakeId();
             newUserDO.setAccountNo(accountNo);
             newUserDO.setPhone(userReq.getPhone());
-            userReq.setPwd(passwordEncoder.encode(userReq.getPwd()));
+            newUserDO.setPwd(passwordEncoder.encode(userReq.getPwd()));
             //新增用户进user表
             myUserDetailsServiceMapper.insert(newUserDO);
             //给新增用户赋予默认角色

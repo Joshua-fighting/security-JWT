@@ -21,8 +21,9 @@ public enum BizCodeEnum {
     /**
      * 用户权限
      */
-    USER_INPUT_ERROR(400,"您输入的数据格式错误或您没有权限访问资源！"),
-    USER_ALREADY_EXISTS(401,"用户已存在")
+    USER_INPUT_ERROR(350000,"您输入的数据格式错误或您没有权限访问资源！"),
+    USER_ALREADY_EXISTS(350001,"用户已存在"),
+    USER_MOBILE_FORMAT_ERROR(350002,"仅支持中国大陆手机号，该手机号格式有误")
     ;
     @Getter
     private final int code;
