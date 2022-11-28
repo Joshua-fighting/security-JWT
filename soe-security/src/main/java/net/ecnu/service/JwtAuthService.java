@@ -10,6 +10,7 @@ import net.ecnu.model.UserReq;
 import net.ecnu.util.IDUtil;
 import net.ecnu.util.JsonData;
 import net.ecnu.utils.JwtTokenUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -41,13 +42,15 @@ public class JwtAuthService {
     /**
      * 登录认证换取JWT令牌
      */
-    public String login(LoginUser loginUser,String password){
+    public String login(String username,String password){
+        LoginUser loginUser = new LoginUser();
         try {
-            String username = loginUser.getPhone();
             UsernamePasswordAuthenticationToken upToken =
                     new UsernamePasswordAuthenticationToken(username,password);
             Authentication authentication = authenticationManager.authenticate(upToken);
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            UserDO userInfoByPhone = myUserDetailsServiceMapper.findUserInfoByPhone(username);
+            BeanUtils.copyProperties(userInfoByPhone,loginUser);
         } catch (AuthenticationException e) {
             throw new BizException(BizCodeEnum.USER_INPUT_ERROR.getCode(),BizCodeEnum.USER_INPUT_ERROR.getMessage());
         }

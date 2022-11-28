@@ -13,8 +13,12 @@ import java.util.List;
 public interface MyUserDetailsServiceMapper extends BaseMapper<UserDO> {
 
     //目前采用手机号作为用户名来进行登录，SQL暂时写死
-    @Select("select phone as username,pwd as password,enabled from user where phone = #{username}")
+    @Select("select phone as username,pwd as password,enabled from user where phone = #{username} and del = 0")
     MyUserDetails findByUserName(@Param("username") String username);
+
+    //根据手机号查询用户信息
+    @Select("select account_no,nick_name,first_language,real_name,phone,mail,enabled from user where phone = #{phone} and del = 0")
+    UserDO findUserInfoByPhone(@Param("phone") String phone);
 
     //根据username查询用户角色列表
     @Select("SELECT role_code\n" +

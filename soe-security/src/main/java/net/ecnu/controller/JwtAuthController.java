@@ -3,8 +3,10 @@ package net.ecnu.controller;
 import net.ecnu.constant.SOEConst;
 import net.ecnu.enums.BizCodeEnum;
 import net.ecnu.exception.BizException;
+import net.ecnu.mapper.MyUserDetailsServiceMapper;
 import net.ecnu.model.JwtProperties;
 import net.ecnu.model.LoginUser;
+import net.ecnu.model.UserDO;
 import net.ecnu.model.UserReq;
 import net.ecnu.service.JwtAuthService;
 import net.ecnu.util.JsonData;
@@ -42,9 +44,7 @@ public class JwtAuthController {
         if(StringUtils.isBlank(username)||StringUtils.isBlank(password)){
             return JsonData.buildCodeAndMsg(BizCodeEnum.PARAM_IS_EMPTY.getCode(),BizCodeEnum.PARAM_IS_EMPTY.getMessage());
         }
-        LoginUser loginUser = new LoginUser();
-        BeanUtils.copyProperties(userReq,loginUser);
-        return JsonData.buildSuccess(jwtAuthService.login(loginUser,password));
+        return JsonData.buildSuccess(jwtAuthService.login(username,password));
     }
 
     /**
